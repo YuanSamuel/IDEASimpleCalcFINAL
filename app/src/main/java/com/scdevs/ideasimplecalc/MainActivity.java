@@ -16,15 +16,18 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		equation = findViewById(R.id.equation);
+		equation.setText("");
+		answer = findViewById(R.id.answer);
+		answer.setText("");
+
 		setButtons();
 		setOnClicks();
 
-		equation = findViewById(R.id.equation);
-		answer = findViewById(R.id.answer);
+
 	}
 
-	void setButtons()
-	{
+	void setButtons() {
 		button0 = findViewById(R.id.button0);
 		button1 = findViewById(R.id.button1);
 		button2 = findViewById(R.id.button2);
@@ -39,11 +42,10 @@ public class MainActivity extends AppCompatActivity {
 		buttonminus = findViewById(R.id.buttonminus);
 		buttontimes = findViewById(R.id.buttontimes);
 		buttondivide = findViewById(R.id.buttondivide);
-
+		buttonequals = findViewById(R.id.buttonequals);
 	}
 
-	void setOnClicks()
-	{
+	void setOnClicks() {
 		button0.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -108,55 +110,74 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				equation.append("+");
+				buttonplus.setEnabled(false);
+				buttonminus.setEnabled(false);
+				buttontimes.setEnabled(false);
+				buttondivide.setEnabled(false);
 			}
 		});
 		buttonminus.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				equation.append("-");
+				buttonplus.setEnabled(false);
+				buttonminus.setEnabled(false);
+				buttontimes.setEnabled(false);
+				buttondivide.setEnabled(false);
 			}
 		});
 		buttontimes.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				equation.append("*");
+				buttonplus.setEnabled(false);
+				buttonminus.setEnabled(false);
+				buttontimes.setEnabled(false);
+				buttondivide.setEnabled(false);
 			}
 		});
 		buttondivide.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				equation.append("/");
+				buttonplus.setEnabled(false);
+				buttonminus.setEnabled(false);
+				buttontimes.setEnabled(false);
+				buttondivide.setEnabled(false);
 			}
 		});
 		buttonequals.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				answer.setText(findAnswer(equation.getText().toString()));
+				equation.setText("");
+				buttonplus.setEnabled(true);
+				buttonminus.setEnabled(true);
+				buttontimes.setEnabled(true);
+				buttondivide.setEnabled(true);
 			}
 		});
 	}
 
-	int findAnswer(String equation)
-	{
-		if (equation.contains("+"))
-		{
-			String[] eqArr = equation.split("\\+");
-			return Integer.parseInt(eqArr[0]) +Integer.parseInt(eqArr[1]);
-		}
-		else if (equation.contains("-"))
-		{
-			String[] eqArr = equation.split("-");
-			return Integer.parseInt(eqArr[0]) -Integer.parseInt(eqArr[1]);
-		}
-		else if (equation.contains("*"))
-		{
-			String[] eqArr = equation.split("\\*");
-			return Integer.parseInt(eqArr[0]) *Integer.parseInt(eqArr[1]);
-		}
-		else
-		{
-			String[] eqArr = equation.split("/");
-			return Integer.parseInt(eqArr[0]) /Integer.parseInt(eqArr[1]);
+	String findAnswer(String equation) {
+		try {
+
+
+			if (equation.contains("+")) {
+				String[] eqArr = equation.split("\\+");
+				return Integer.parseInt(eqArr[0]) + Integer.parseInt(eqArr[1]) + "";
+			} else if (equation.contains("-")) {
+				String[] eqArr = equation.split("-");
+				return Integer.parseInt(eqArr[0]) - Integer.parseInt(eqArr[1]) + "";
+			} else if (equation.contains("*")) {
+				String[] eqArr = equation.split("\\*");
+				return Integer.parseInt(eqArr[0]) * Integer.parseInt(eqArr[1]) + "";
+			} else {
+				String[] eqArr = equation.split("/");
+				return Double.parseDouble(eqArr[0]) / Double.parseDouble(eqArr[1]) + "";
+			}
+		} catch (Exception e) {
+			return "Error";
 		}
 	}
 }
